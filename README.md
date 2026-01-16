@@ -1,222 +1,234 @@
-# Parallax Windows CLI
+<div align="center">
 
-Parallax Windows CLI is a development environment configuration tool for Windows platform, providing automatic detection and installation of WSL2, CUDA toolkit, development tools, and more. This project adopts modern C++ architecture and implements one-click deployment through NSIS-built Windows installer, supporting WSL2 + Ubuntu development environment configuration.
+# Prakasa Windows CLI
+
+Prakasa Windows CLI is a Windows environment configuration tool for the Prakasa decentralized P2P GPU inference network. It provides automatic detection and installation of WSL2, CUDA toolkit, and runtime dependencies required for participating in the Prakasa network. This project adopts modern C++ architecture and implements one-click deployment through NSIS-built Windows installer.
+
+
+<h3>Prakasa — Decentralized P2P GPU Inference Network</h1>
+  <p style="font-size:1.05em; margin-top:6px;">Prakasa (Sanskrit: प्रकाश) — The decentralized "Light" of intelligence.</p>
+  <p style="max-width:900px; margin:12px auto;">
+    Prakasa is a decentralized, privacy-preserving P2P GPU inference middleware built on top of the open-source Parallax engine. It leverages the Nostr protocol for resilient, censorship-resistant orchestration and integrates the RIM economic system for trustless, real-time settlements and reputation.
+  </p>
+</div>
+
+## About Prakasa
+
+Prakasa is a high-performance, privacy-centric P2P GPU inference middleware that transforms idle GPU resources into a unified, resilient intelligence layer. Key features include:
+
+- **Nostr-Powered Orchestration**: Decentralized communication bus with no single point of failure
+- **RIM Economic System**: Atomic settlements with real-time micropayments per inference
+- **Privacy & Security**: End-to-end encryption, NIP-44/59 Gift Wrap for metadata protection
+- **Built on Parallax**: Evolution of the open-source Parallax engine for global P2P scale
 
 ## Features
 
 ### 1. Environment Management
-- **Automatic Check**: Comprehensive checking of Windows environment, WSL2, NVIDIA drivers, and other components
-- **One-Click Installation**: Automatic installation and configuration of WSL2, CUDA toolkit, development tools, etc.
-- **Smart Detection**: Support for NVIDIA GPU detection and CUDA toolkit checking
+
+- **Automatic Check**: Comprehensive checking of Windows environment, WSL2, NVIDIA drivers, and Prakasa runtime
+- **One-Click Installation**: Automatic installation and configuration of WSL2, CUDA toolkit, Prakasa dependencies
+- **Smart Detection**: Support for NVIDIA GPU detection and CUDA toolkit verification
 - **System Requirements**: Minimum support for RTX 3060 Ti, recommended RTX 4090 or higher configuration
 
-### 2. Automated Environment Configuration
-- **Smart Detection**: Automatic detection of system environment and hardware configuration
-- **One-Click Installation**: Automatic installation of WSL2, CUDA toolkit, development tools, etc.
-- **GPU Support**: Complete NVIDIA GPU detection and driver verification
-- **Real-time Feedback**: Support for real-time viewing of installation progress and status
+### 2. Prakasa Network Integration
+
+- **P2P Node Setup**: Configure your Windows machine as a Prakasa compute provider
+- **Nostr Integration**: Automatic setup of Nostr relay connections for decentralized orchestration
+- **RIM Wallet**: Integrated settlement system for receiving compute payments
+- **Real-time Feedback**: Monitor installation progress and network connectivity status
 
 ### 3. WSL2 Integration
-- **Command Execution**: Complete WSL2 command execution support
-- **Real-time Output**: Real-time stdout/stderr output for WSL command execution
-- **Interrupt Support**: Support for Ctrl+C interruption of running WSL commands
-- **Proxy Synchronization**: Automatic synchronization of system proxy configuration to WSL environment
+
+- **Command Execution**: Complete WSL2 command execution support for Prakasa runtime
+- **Real-time Output**: Real-time stdout/stderr output for inference job monitoring
+- **Interrupt Support**: Support for Ctrl+C interruption of running compute tasks
+- **Proxy Synchronization**: Automatic synchronization of system proxy configuration for Nostr relay access
 
 ### 4. Configuration Management
+
 - **Flexible Configuration**: Support for multiple configurations including proxy, WSL distribution, installation sources, etc.
 - **Dynamic Updates**: Configuration changes automatically synchronized to related components
 - **Reset Function**: One-click reset of all configurations to default state
 - **Secure Storage**: Secure storage and access control for configuration files
 
 ### 5. Modern Architecture Design
+
 - **Template Method Pattern**: Unified command execution flow and error handling
 - **CRTP Technology**: Compile-time polymorphism with zero runtime overhead
 - **Command Pattern**: Extensible command registration and execution mechanism
 - **Strategy Pattern**: Flexible environment requirements and checking strategies
+- **C++ Shell + Python Core**: Windows native shell forwarding to Prakasa Python runtime
 
 ## Architecture Design
 
-Parallax Windows CLI adopts modern C++ design patterns and mainly contains the following core components:
+Prakasa Windows CLI is a C++ native shell that manages the Prakasa Python runtime in WSL2. The architecture includes:
 
-### 1. Command Line Interface
-- **Location**: `src/parallax/cli/`
-- **Functions**:
-  - Unified command parsing and execution framework
-  - Command base class based on template method pattern
-  - Support for standardized parameter validation, environment preparation, and execution flow
-- **Supported Commands**: check, install, config, run, join, chat, cmd
+- **Command Line Interface** (`src/parallax/cli/`): Unified command parsing with template method pattern
+- **Environment Installer** (`src/parallax/environment/`): Modular system for WSL2, CUDA, and Prakasa setup
+- **Configuration Manager** (`src/parallax/config/`): Dynamic configuration loading and validation
+- **Utility Library** (`src/parallax/utils/`): WSL command building, process management, GPU detection
+- **Logging System** (`src/parallax/tinylog/`): Asynchronous logging with rotation support
 
-### 2. Environment Installer
-- **Location**: `src/parallax/environment/`
-- **Architecture Features**:
-  - Modular design with separation of concerns
-  - Composite pattern managing multiple specialized components
-  - Unified checking and installation interface
-- **Core Components**:
-  - `base_component`: Basic interface and execution context
-  - `command_executor`: Unified command executor
-  - `system_checker`: System checker (OS version, NVIDIA GPU, NVIDIA driver, BIOS virtualization)
-  - `windows_feature_manager`: Windows feature manager (WSL2, virtual machine platform, WSL package, WSL2 kernel, Ubuntu)
-  - `software_installer`: Software installer (CUDA toolkit check, Rust Cargo, Ninja build tool, pip upgrade, Parallax project)
-- **State Management**: Support for success, failure, skip, and warning states
-
-### 3. Configuration Manager
-- **Location**: `src/parallax/config/`
-- **Functions**:
-  - Unified configuration file management
-  - Support for dynamic configuration loading and updating
-  - Configuration validation and default value handling
-
-### 4. Utility Library
-- **Location**: `src/parallax/utils/`
-- **Functions**:
-  - `utils`: WSL command building, string conversion, GPU detection, file operations
-  - `process`: Process management and real-time output handling, supporting callbacks and interruption
-  - `wsl_process`: WSL-specific process management, supporting real-time output and encoding conversion
-
-### 5. Logging System
-- **Location**: `src/parallax/tinylog/`
-- **Functions**:
-  - High-performance asynchronous logging system
-  - Support for log rotation and size limits
-  - Multi-level log output and filtering
+For detailed architecture analysis, see [ARCHITECTURE_ANALYSIS.md](ARCHITECTURE_ANALYSIS.md).
 
 ## System Requirements
 
-### System Requirements
-- **Operating System**: Windows 10 Version 2004 (Build 19041) or Windows 11
-- **Architecture**: x86_64
-- **Permissions**: Administrator privileges (for WSL2 and Docker installation)
-- **Memory**: Minimum 16GB RAM, recommended 32GB or higher
-- **Storage**: Minimum 50GB available space
+**Operating System**: Windows 10 Version 2004+ or Windows 11 (x86_64, Administrator privileges required)
 
-### Hardware Requirements
-- **GPU**: NVIDIA RTX 3060 Ti or higher configuration
-- **VRAM**: Minimum 8GB VRAM, recommended 24GB or higher
-- **CPU**: Intel i5-8400 or AMD Ryzen 5 2600 and above (recommended)
-- **Network**: Stable internet connection (for downloading images and models)
+**Hardware**:
 
-### Software Dependencies
-- **WSL2**: Windows Subsystem for Linux 2
-- **Ubuntu**: Ubuntu distribution on WSL2 (default Ubuntu-24.04)
-- **NVIDIA Driver**: Latest driver supporting CUDA 12.x
-- **CUDA Toolkit**: CUDA Toolkit 12.8 or 12.9 version (needs to be pre-installed)
-- **Rust Cargo**: Rust package manager and build tool
-- **Ninja**: Fast build tool
+- GPU: NVIDIA RTX 3060 Ti or higher (8GB+ VRAM, 24GB recommended)
+- RAM: 16GB minimum (32GB recommended)
+- Storage: 50GB+ available space
+- Network: Stable internet connection
+
+**Software** (automatically installed except CUDA):
+
+- WSL2 + Ubuntu 24.04
+- NVIDIA Driver with CUDA 12.x support
+- CUDA Toolkit 12.8 or 12.9 (pre-install required)
+- Prakasa Runtime (Python-based)
 
 ## Quick Start
 
 ### 1. Download and Install
+
 Download the latest installer from the Release page:
 
-[Parallax_Win_Setup.exe](https://github.com/GradientHQ/parallax_win_cli/releases/latest/download/Parallax_Win_Setup.exe)
+[Prakasa_Windows_Setup.exe](https://github.com/hetu-project/prakasa_windows_cli/releases/latest/download/Prakasa_Windows_Setup.exe)
 
 ### 2. Environment Check
+
 ```cmd
-parallax check
+prakasa check
 ```
 
 ### 3. Environment Installation (if needed)
+
 ```cmd
-parallax install
+prakasa install
 ```
 
 ### 4. Configure Proxy (optional)
+
 ```cmd
-parallax config proxy_url "http://127.0.0.1:7890"
+prakasa config proxy_url "http://127.0.0.1:7890"
 ```
 
 ### 5. Verify Installation
+
 ```cmd
 # Verify all environment components
-parallax check
+prakasa check
 
-# Start Parallax inference server (optional)
-parallax run
+# Start Prakasa compute node
+prakasa run
+
+# Join Prakasa network as provider
+prakasa join
 
 # Access chat interface (optional)
-parallax chat
+prakasa chat
 ```
 
 ## Command Reference
 
-### `parallax check`
-Check environment requirements and component status
+### `prakasa check`
+
+Check environment requirements and Prakasa node readiness
+
 ```cmd
-parallax check [--help|-h]
+prakasa check [--help|-h]
 ```
 
-### `parallax install`
-Install required environment components
+### `prakasa install`
+
+Install required environment components and Prakasa runtime
+
 ```cmd
-parallax install [--help|-h]
+prakasa install [--help|-h]
 ```
 
-### `parallax config`
+### `prakasa config`
+
 Configuration management command
+
 ```cmd
 # View all configurations
-parallax config list
+prakasa config list
 
 # Set configuration item
-parallax config <key> <value>
+prakasa config <key> <value>
 
 # Delete configuration item
-parallax config <key> ""
+prakasa config <key> ""
 
 # Reset all configurations
-parallax config reset
+prakasa config reset
 
 # View help
-parallax config --help
+prakasa config --help
 ```
 
-### `parallax run`
-Run Parallax inference server directly in WSL
+### `prakasa run`
+
+Run Prakasa node (scheduler mode) directly in WSL
+
 ```cmd
-parallax run [args...]
+prakasa run [args...]
 ```
 
-### `parallax join`
-Join distributed inference cluster as a node
+### `prakasa join`
+
+Join Prakasa P2P network as a compute provider
+
 ```cmd
-parallax join [args...]
+prakasa join [args...]
 ```
 
-### `parallax chat`
-Access chat interface from non-scheduler computer
+### `prakasa chat`
+
+Access Prakasa chat interface for testing inference
+
 ```cmd
-parallax chat [args...]
+prakasa chat [args...]
 ```
 
-### `parallax cmd`
-Execute commands in WSL or Python virtual environment
+### `prakasa cmd`
+
+Execute commands in WSL or Prakasa Python virtual environment
+
 ```cmd
-parallax cmd [--venv] <command> [args...]
+prakasa cmd [--venv] <command> [args...]
 ```
 
 **Command Descriptions**:
-- `run`: Start Parallax inference server directly in WSL. You can pass any arguments supported by `parallax run` command. Examples: `parallax run -m Qwen/Qwen3-0.6B`, `parallax run --port 8080`
-- `join`: Join distributed inference cluster as a worker node. You can pass any arguments supported by `parallax join` command. Examples: `parallax join -m Qwen/Qwen3-0.6B`, `parallax join -s scheduler-addr`
-- `chat`: Access chat interface from any non-scheduler computer. You can pass any arguments supported by `parallax chat` command. Examples: `parallax chat` (local network), `parallax chat -s scheduler-addr` (public network), `parallax chat --host 0.0.0.0` (allow external access). After launching, visit http://localhost:3002 in your browser.
-- `cmd`: Pass-through commands to WSL environment, supports `--venv` option to run in parallax project's Python virtual environment
+
+- `run`: Start Prakasa node in scheduler mode. Acts as a coordinator in the P2P network. You can pass any arguments supported by `prakasa run` command. Examples: `prakasa run -m Qwen/Qwen3-0.6B`, `prakasa run --port 8080`
+- `join`: Join Prakasa P2P network as a compute provider. Your GPU will be available for decentralized inference tasks. Examples: `prakasa join -m Qwen/Qwen3-0.6B`, `prakasa join -s scheduler-addr`
+- `chat`: Access chat interface for testing Prakasa inference capabilities. Examples: `prakasa chat` (local network), `prakasa chat -s scheduler-addr` (remote scheduler), `prakasa chat --host 0.0.0.0` (allow external access). After launching, visit http://localhost:3002 in your browser.
+- `cmd`: Pass-through commands to WSL environment, supports `--venv` option to run in Prakasa project's Python virtual environment
 
 **Main Configuration Items**:
-- `proxy_url`: Network proxy address (supports http, socks5, socks5h)
+
+- `proxy_url`: Network proxy address (supports http, socks5, socks5h) - for Nostr relay access
 - `wsl_linux_distro`: WSL Linux distribution (default Ubuntu-24.04)
 - `wsl_installer_url`: WSL installer download URL
 - `wsl_kernel_url`: WSL2 kernel update package download URL
-- `parallax_git_repo_url`: Parallax project Git repository URL (default: https://github.com/GradientHQ/parallax.git)
+- `prakasa_git_repo_url`: Prakasa project Git repository URL (default: https://github.com/hetu-project/prakasa.git)
 
 ## Build Instructions
 
 ### Development Environment
+
 - **Visual Studio 2022**: With C++ desktop development workload
 - **CMake 3.20+**: For building C++ projects
 - **NSIS 3.08+**: For creating Windows installer
 
 ### Quick Build
+
 Execute in project root directory:
+
 ```cmd
 cd src
 mkdir build && cd build
@@ -224,15 +236,16 @@ cmake ../parallax -A x64
 cmake --build . --config Release
 ```
 
-Generated executable is located at: `src/build/x64/Release/parallax.exe`
+Generated executable is located at: `src/build/x64/Release/prakasa.exe`
 
 ### Create Installer
+
 ```cmd
 # 1. Create installation file directory
 mkdir installer\FilesToInstall
 
 # 2. Copy generated executable
-copy src\build\x64\Release\parallax.exe installer\FilesToInstall\
+copy src\build\x64\Release\prakasa.exe installer\FilesToInstall\
 
 # 3. Build installer
 call installer\build-nim-nozip.bat
@@ -240,7 +253,7 @@ call installer\build-nim-nozip.bat
 
 ## Configuration
 
-Parallax is configured through configuration files, main configuration items include:
+Prakasa is configured through configuration files, main configuration items include:
 
 ```conf
 # WSL related configuration
@@ -248,206 +261,80 @@ wsl_installer_url=https://github.com/microsoft/WSL/releases/download/2.4.13/wsl.
 wsl_kernel_url=https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 wsl_linux_distro=Ubuntu-24.04
 
-# Parallax project configuration
-parallax_git_repo_url=https://github.com/GradientHQ/parallax.git
+# Prakasa project configuration
+prakasa_git_repo_url=https://github.com/hetu-project/prakasa.git
 
-# Network proxy configuration (optional)
+# Network proxy configuration (optional, for Nostr relay access)
 proxy_url=http://127.0.0.1:7890
 ```
 
 ## Troubleshooting
 
-### Common Issues
+**Common Issues**:
 
-1. **Environment Check Failed**
-   - Ensure running commands with administrator privileges
-   - Check if Windows version meets requirements
-   - Verify NVIDIA GPU and driver installation
+1. **Environment Check Failed**: Run with administrator privileges, verify Windows version and NVIDIA driver
+2. **WSL2 Installation Failed**: Enable Virtual Machine Platform in Windows Features, check BIOS virtualization
+3. **CUDA Not Detected**: Pre-install CUDA Toolkit 12.8 or 12.9, verify with `nvidia-smi`
+4. **Network Issues**: Configure proxy if needed for Nostr relay access (`prakasa config proxy_url "http://..."`)
 
-2. **WSL2 Installation Failed**
-   - Enable Windows features: Virtual Machine Platform and WSL
-   - Check if virtualization is enabled in BIOS
-   - Ensure system is updated to the latest version
-
-3. **CUDA Toolkit Check Failed**
-   - Check if NVIDIA driver is correctly installed
-   - Confirm CUDA Toolkit is correctly installed
-   - Verify CUDA version meets requirements (12.8 or 12.9)
-
-4. **Parallax Project Installation Failed**
-   - Check Git repository access permissions
-   - Verify proxy configuration is correct
-   - Ensure sufficient storage space in WSL2
-
-5. **Network Connection Issues**
-   - Configure correct proxy settings
-   - Check firewall and network policies
-   - Verify software package repository access permissions
-
-### Log Viewing
-
-- **Main Program Log**: `parallax.log` (Program running directory: C:\Program Files (x86)\Gradient Parallax\parallax.log)
-- **Detailed Debugging**: View detailed output of command execution
-
-### Diagnostic Commands
+**Diagnostic Commands**:
 
 ```cmd
-# Check environment status (recommended)
-parallax check
-
-# View detailed configuration
-parallax config list
-
-# Start inference server test
-parallax run
-
-# Access chat interface test
-parallax chat
-
-# Execute commands in WSL
-parallax cmd "python --version"
-
-# Manual verification of specific components (optional)
-wsl --list --verbose    # WSL status
-nvidia-smi             # GPU status
+prakasa check              # Full environment check
+prakasa config list        # View configuration
+wsl --list --verbose       # WSL status
+nvidia-smi                 # GPU status
 ```
 
-## Technical Features
+**Logs**: `prakasa.log` in installation directory (`C:\Program Files (x86)\Prakasa\`)
 
-### Real-time Output Support
-- All long-running commands support real-time output
-- Support for Ctrl+C interruption
-- Automatic handling of output encoding conversion
+## Key Technical Features
 
-### Automatic Proxy Configuration Synchronization
-- Automatic detection of proxy configuration changes
-- WSL network environment adaptation
+- **Real-time Command Output**: Live stdout/stderr with Ctrl+C interrupt support
+- **Automatic Proxy Sync**: Proxy configuration forwarded to WSL and Nostr relays
+- **Smart GPU Detection**: Automatic NVIDIA GPU and CUDA compatibility verification
+- **Comprehensive Error Handling**: Detailed diagnostics with recovery suggestions
 
-### Smart GPU Detection
-- Automatic detection of NVIDIA GPU models
-- Verification of GPU driver and CUDA compatibility
-- Support for mainstream NVIDIA GPU architectures
+## Development
 
-### Error Handling
-- Comprehensive environment checking mechanism
-- Detailed error messages and suggestions
-- Graceful failure recovery handling
+For development guidelines, build instructions, code style, and contribution workflow, see:
 
-## Development Guide
-
-### Adding New Commands
-
-1. Create new command class in `src/parallax/cli/commands/` directory
-2. Inherit appropriate base class (BaseCommand, WSLCommand, AdminCommand)
-3. Implement required virtual functions
-4. Register new command in `command_parser.cpp`
-
-```cpp
-// Example: Adding new check command
-class NewCheckCommand : public WSLCommand<NewCheckCommand> {
-public:
-    std::string GetName() const override { return "newcheck"; }
-    std::string GetDescription() const override { 
-        return "New check functionality"; 
-    }
-    
-    CommandResult ExecuteImpl(const CommandContext& context) {
-        // Implement specific logic
-        return CommandResult::Success;
-    }
-};
-```
-
-### Extending Environment Checks
-
-1. Choose appropriate component class based on functionality type (SystemChecker, WindowsFeatureManager, SoftwareInstaller)
-2. Inherit `BaseEnvironmentComponent` and implement `IEnvironmentComponent` interface
-3. Register new component in main `EnvironmentInstaller`
-4. Update related error handling and user prompts
-
-```cpp
-// Example: Adding new system check component
-class NewSystemChecker : public BaseEnvironmentComponent {
-public:
-    explicit NewSystemChecker(std::shared_ptr<ExecutionContext> context);
-    
-    ComponentResult Check() override;
-    ComponentResult Install() override;
-    EnvironmentComponent GetComponentType() const override;
-    std::string GetComponentName() const override;
-};
-```
-
-### Adding Configuration Items
-
-1. Define new configuration keys in `config_manager.h`
-2. Add default values and validation logic in `config_manager.cpp`
-3. Update help information for configuration commands
+- **Developer Guide**: [AGENTS.md](AGENTS.md)
+- **Architecture Details**: [ARCHITECTURE_ANALYSIS.md](ARCHITECTURE_ANALYSIS.md)
 
 ## Directory Structure
 
 ```
-parallax_win/
-├── src/
-│   └── parallax/
-│       ├── cli/                    # Command line interface
-│       │   ├── commands/          # Specific command implementations
-│       │   │   ├── base_command.h
-│       │   │   ├── check_command.cpp/.h
-│       │   │   ├── install_command.cpp/.h
-│       │   │   ├── config_command.cpp/.h
-│       │   │   ├── cmd_command.cpp/.h
-│       │   │   └── model_commands.cpp/.h  # run and join commands
-│       │   ├── command_parser.h   # Command parser
-│       │   └── command_parser.cpp
-│       ├── environment/           # Environment installer (modularized after refactoring)
-│       │   ├── environment_installer.h/.cpp      # Main controller
-│       │   ├── base_component.h/.cpp             # Basic interface and context
-│       │   ├── command_executor.h/.cpp           # Command executor
-│       │   ├── system_checker.h/.cpp             # System checker
-│       │   ├── windows_feature_manager.h/.cpp    # Windows feature manager
-│       │   ├── windows_feature_manager2.cpp      # Windows feature manager (continued)
-│       │   ├── software_installer.h/.cpp         # Software installer
-│       │   └── software_installer2.cpp           # Software installer (continued)
-│       ├── config/                # Configuration management
-│       │   ├── config_manager.h
-│       │   └── config_manager.cpp
-│       ├── utils/                 # Utility library
-│       │   ├── utils.h/.cpp       # General utility functions
-│       │   ├── process.h/.cpp     # Process management
-│       │   └── wsl_process.h/.cpp # WSL process management
-│       ├── tinylog/               # Logging system
-│       │   ├── tinylog.h
-│       │   └── tinylog.cpp
-│       ├── main.cpp               # Program entry point
-│       └── CMakeLists.txt         # Build configuration
-├── installer/                     # NSIS installer
-│   ├── SetupScripts/
-│   └── Output/
-├── parallax_config.txt            # Default configuration
-└── README.md                      # This document
+prakasa_windows_cli/
+├── src/prakasa/           # C++ source code
+│   ├── cli/              # Command line interface
+│   ├── environment/      # Environment installer
+│   ├── config/           # Configuration manager
+│   ├── utils/            # Utilities and WSL integration
+│   └── tinylog/          # Logging system
+├── docker/               # Cross-compilation support
+├── installer/            # NSIS installer scripts
+├── AGENTS.md            # Developer guide
+├── ARCHITECTURE_ANALYSIS.md  # Technical architecture
+└── README.md            # This file
 ```
-
-## License
-
-Please refer to the LICENSE file for license information.
 
 ## Contributing
 
-1. Fork this project
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Create a Pull Request
+Contributions welcome! Please fork the repository, create a feature branch, and submit a Pull Request. For issues or questions, open an issue on GitHub.
 
-## Contact
+## License
 
-If you have any questions or suggestions, please contact us through:
-
-- Create an Issue to report problems
-- Submit a Pull Request to contribute code
-- Contact the development team for support
+See [LICENSE](LICENSE) file for details.
 
 ---
 
-**Note**: Parallax is a high-performance distributed inference framework optimized for NVIDIA GPUs. Please ensure your hardware configuration meets the minimum requirements and that relevant drivers are correctly installed before use.
+**Note**: Prakasa is a decentralized P2P GPU inference network built on the Parallax engine. It leverages Nostr protocol for resilient orchestration and RIM economic system for trustless settlements. Please ensure your hardware configuration meets the minimum requirements and that relevant drivers are correctly installed before participating in the network.
+
+## Additional Resources
+
+- **Prakasa Core Repository**: [github.com/hetu-project/prakasa](https://github.com/hetu-project/prakasa)
+- **Architecture Analysis**: See [ARCHITECTURE_ANALYSIS.md](ARCHITECTURE_ANALYSIS.md) for detailed technical design
+- **Developer Guide**: See [AGENTS.md](AGENTS.md) for development guidelines
+- **Nostr Protocol**: [github.com/nostr-protocol/nostr](https://github.com/nostr-protocol/nostr)
+- **Original Parallax**: [github.com/gradienthq/parallax](https://github.com/gradienthq/parallax)

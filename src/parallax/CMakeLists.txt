@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.6.0)
 
-set(PROJECT_NAME parallax)
+set(PROJECT_NAME prakasa)
 
 project(${PROJECT_NAME} C CXX)
 

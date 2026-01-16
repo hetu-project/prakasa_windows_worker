@@ -1,6 +1,7 @@
 # Build directories and artifacts
 /src/build/
 **/build/
+**/build-mingw/
 **/Debug/
 **/Release/
 **/x64/

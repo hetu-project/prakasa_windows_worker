@@ -4,257 +4,292 @@
 #include "tinylog/tinylog.h"
 #include <sstream>
 
-namespace parallax {
-namespace commands {
+namespace parallax
+{
+    namespace commands
+    {
 
-// ModelRunCommand implementation (WSL version)
-bool ModelRunCommand::CheckLaunchScriptExists(const CommandContext& context) {
-    std::string check_cmd = "test -f ~/parallax/src/parallax/launch.py";
-    std::string wsl_command = BuildWSLCommand(context, check_cmd);
+        // ModelRunCommand implementation (WSL version)
+        bool ModelRunCommand::CheckLaunchScriptExists(const CommandContext &context)
+        {
+            std::string check_cmd = "test -f ~/prakasa/src/prakasa/launch.py";
+            std::string wsl_command = BuildWSLCommand(context, check_cmd);
 
-    std::string stdout_output, stderr_output;
-    int exit_code = parallax::utils::ExecCommandEx(
-        wsl_command, 30, stdout_output, stderr_output, false, true);
+            std::string stdout_output, stderr_output;
+            int exit_code = parallax::utils::ExecCommandEx(
+                wsl_command, 30, stdout_output, stderr_output, false, true);
 
-    return exit_code == 0;
-}
+            return exit_code == 0;
+        }
 
-bool ModelRunCommand::IsParallaxProcessRunning(const CommandContext& context) {
-    // Use pgrep to find processes, matching python/python3 and
-    // parallax/launch.py
-    std::string check_cmd = "pgrep -f 'python[0-9]*.*parallax/launch.py'";
-    std::string wsl_command = BuildWSLCommand(context, check_cmd);
+        bool ModelRunCommand::IsParallaxProcessRunning(const CommandContext &context)
+        {
+            // Use pgrep to find processes, matching python/python3 and
+            // prakasa/launch.py
+            std::string check_cmd = "pgrep -f 'python[0-9]*.*prakasa/launch.py'";
+            std::string wsl_command = BuildWSLCommand(context, check_cmd);
 
-    std::string stdout_output, stderr_output;
-    int exit_code = parallax::utils::ExecCommandEx(
-        wsl_command, 30, stdout_output, stderr_output, false, true);
+            std::string stdout_output, stderr_output;
+            int exit_code = parallax::utils::ExecCommandEx(
+                wsl_command, 30, stdout_output, stderr_output, false, true);
 
-    // pgrep returns 0 if matching process is found, returns 1 if not found
-    if (exit_code == 0) {
-        info_log("Parallax process found: %s", stdout_output.c_str());
-    }
-    return exit_code == 0;
-}
+            // pgrep returns 0 if matching process is found, returns 1 if not found
+            if (exit_code == 0)
+            {
+                info_log("Parallax process found: %s", stdout_output.c_str());
+            }
+            return exit_code == 0;
+        }
 
-bool ModelRunCommand::RunParallaxScript(const CommandContext& context) {
-    // Build run command: parallax run [user parameters...]
-    std::string run_command = BuildRunCommand(context);
+        bool ModelRunCommand::RunParallaxScript(const CommandContext &context)
+        {
+            // Build run command: parallax run [user parameters...]
+            std::string run_command = BuildRunCommand(context);
 
-    // Build complete WSL command with venv activation and CUDA environment
-    std::string full_command = BuildVenvActivationCommand(context);
+            // Build complete WSL command with venv activation and CUDA environment
+            std::string full_command = BuildVenvActivationCommand(context);
 
-    // If proxy is configured, add proxy environment variables
-    if (!context.proxy_url.empty()) {
-        full_command += " && HTTP_PROXY='" + context.proxy_url +
-                        "' HTTPS_PROXY='" + context.proxy_url + "' " +
-                        run_command;
-    } else {
-        full_command += " && " + run_command;
-    }
+            // If proxy is configured, add proxy environment variables
+            if (!context.proxy_url.empty())
+            {
+                full_command += " && HTTP_PROXY='" + context.proxy_url +
+                                "' HTTPS_PROXY='" + context.proxy_url + "' " +
+                                run_command;
+            }
+            else
+            {
+                full_command += " && " + run_command;
+            }
 
-    std::string wsl_command = BuildWSLCommand(context, full_command);
+            std::string wsl_command = BuildWSLCommand(context, full_command);
 
-    info_log("Executing Parallax launch command: %s", wsl_command.c_str());
+            info_log("Executing Parallax launch command: %s", wsl_command.c_str());
 
-    WSLProcess wsl_process;
-    int exit_code = wsl_process.Execute(wsl_command);
+            WSLProcess wsl_process;
+            int exit_code = wsl_process.Execute(wsl_command);
 
-    return exit_code == 0;
-}
+            return exit_code == 0;
+        }
 
-std::string ModelRunCommand::BuildRunCommand(const CommandContext& context) {
-    std::ostringstream command_stream;
+        std::string ModelRunCommand::BuildRunCommand(const CommandContext &context)
+        {
+            std::ostringstream command_stream;
 
-    // Built-in execution of parallax run
-    command_stream << "parallax run";
+            // Built-in execution of prakasa run
+            command_stream << "prakasa run";
 
-    // If there are user parameters, append them
-    for (const auto& arg : context.args) {
-        command_stream << " " << EscapeForShell(arg);
-    }
+            // If there are user parameters, append them
+            for (const auto &arg : context.args)
+            {
+                command_stream << " " << EscapeForShell(arg);
+            }
 
-    return command_stream.str();
-}
+            return command_stream.str();
+        }
 
-// ModelJoinCommand implementation
-CommandResult ModelJoinCommand::ValidateArgsImpl(CommandContext& context) {
-    // Check if it's a help request
-    if (context.args.size() == 1 &&
-        (context.args[0] == "--help" || context.args[0] == "-h")) {
-        ShowHelpImpl();
-        return CommandResult::Success;
-    }
+        // ModelJoinCommand implementation
+        CommandResult ModelJoinCommand::ValidateArgsImpl(CommandContext &context)
+        {
+            // Check if it's a help request
+            if (context.args.size() == 1 &&
+                (context.args[0] == "--help" || context.args[0] == "-h"))
+            {
+                ShowHelpImpl();
+                return CommandResult::Success;
+            }
 
-    // join command can be executed without parameters (using default
-    // scripts/join.sh)
-    return CommandResult::Success;
-}
+            // join command can be executed without parameters (using default
+            // scripts/join.sh)
+            return CommandResult::Success;
+        }
 
-CommandResult ModelJoinCommand::ExecuteImpl(const CommandContext& context) {
-    // Build cluster join command: parallax join [user parameters...]
-    std::string join_command = BuildJoinCommand(context);
+        CommandResult ModelJoinCommand::ExecuteImpl(const CommandContext &context)
+        {
+            // Build cluster join command: parallax join [user parameters...]
+            std::string join_command = BuildJoinCommand(context);
 
-    // Build complete WSL command with venv activation and CUDA environment
-    std::string full_command = BuildVenvActivationCommand(context);
+            // Build complete WSL command with venv activation and CUDA environment
+            std::string full_command = BuildVenvActivationCommand(context);
 
-    // If proxy is configured, add proxy environment variables
-    if (!context.proxy_url.empty()) {
-        full_command += " && HTTP_PROXY='" + context.proxy_url +
-                        "' HTTPS_PROXY='" + context.proxy_url + "' " +
-                        join_command;
-    } else {
-        full_command += " && " + join_command;
-    }
+            // If proxy is configured, add proxy environment variables
+            if (!context.proxy_url.empty())
+            {
+                full_command += " && HTTP_PROXY='" + context.proxy_url +
+                                "' HTTPS_PROXY='" + context.proxy_url + "' " +
+                                join_command;
+            }
+            else
+            {
+                full_command += " && " + join_command;
+            }
 
-    std::string wsl_command = BuildWSLCommand(context, full_command);
+            std::string wsl_command = BuildWSLCommand(context, full_command);
 
-    info_log("Executing cluster join command: %s", wsl_command.c_str());
+            info_log("Executing cluster join command: %s", wsl_command.c_str());
 
-    // Use WSLProcess to execute command for real-time output
-    WSLProcess wsl_process;
-    int exit_code = wsl_process.Execute(wsl_command);
+            // Use WSLProcess to execute command for real-time output
+            WSLProcess wsl_process;
+            int exit_code = wsl_process.Execute(wsl_command);
 
-    if (exit_code == 0) {
-        ShowInfo("Successfully joined the distributed inference cluster.");
-        return CommandResult::Success;
-    } else {
-        ShowError("Failed to join cluster with exit code: " +
-                  std::to_string(exit_code));
-        return CommandResult::ExecutionError;
-    }
-}
+            if (exit_code == 0)
+            {
+                ShowInfo("Successfully joined the distributed inference cluster.");
+                return CommandResult::Success;
+            }
+            else
+            {
+                ShowError("Failed to join cluster with exit code: " +
+                          std::to_string(exit_code));
+                return CommandResult::ExecutionError;
+            }
+        }
 
-void ModelJoinCommand::ShowHelpImpl() {
-    std::cout << "Usage: parallax join [args...]\n\n";
-    std::cout << "Join a distributed inference cluster as a compute node.\n\n";
-    std::cout << "This command will:\n";
-    std::cout << "  1. Change to ~/parallax directory\n";
-    std::cout << "  2. Activate the Python virtual environment\n";
-    std::cout << "  3. Set proxy environment variables (if configured)\n";
-    std::cout << "  4. Execute 'parallax join' with your arguments\n\n";
-    std::cout << "Arguments:\n";
-    std::cout << "  args...       Arguments to pass to parallax join "
-                 "(optional)\n\n";
-    std::cout << "Options:\n";
-    std::cout << "  --help, -h    Show this help message\n\n";
-    std::cout << "Examples:\n";
-    std::cout
-        << "  parallax join                           # Execute: parallax "
-           "join\n";
-    std::cout << "  parallax join -m Qwen/Qwen3-0.6B       # Execute: parallax "
-                 "join -m Qwen/Qwen3-0.6B\n";
-    std::cout
-        << "  parallax join -s scheduler-addr         # Execute: parallax "
-           "join -s scheduler-addr\n\n";
-    std::cout << "Note: All arguments will be passed to the built-in "
-                 "parallax join script\n";
-    std::cout << "      in the Parallax Python virtual environment.\n";
-}
+        void ModelJoinCommand::ShowHelpImpl()
+        {
+            std::cout << "Usage: parallax join [args...]\n\n";
+            std::cout << "Join a distributed inference cluster as a compute node.\n\n";
+            std::cout << "This command will:\n";
+            std::cout << "  1. Change to ~/parallax directory\n";
+            std::cout << "  2. Activate the Python virtual environment\n";
+            std::cout << "  3. Set proxy environment variables (if configured)\n";
+            std::cout << "  4. Execute 'parallax join' with your arguments\n\n";
+            std::cout << "Arguments:\n";
+            std::cout << "  args...       Arguments to pass to parallax join "
+                         "(optional)\n\n";
+            std::cout << "Options:\n";
+            std::cout << "  --help, -h    Show this help message\n\n";
+            std::cout << "Examples:\n";
+            std::cout
+                << "  parallax join                           # Execute: parallax "
+                   "join\n";
+            std::cout << "  parallax join -m Qwen/Qwen3-0.6B       # Execute: parallax "
+                         "join -m Qwen/Qwen3-0.6B\n";
+            std::cout
+                << "  parallax join -s scheduler-addr         # Execute: parallax "
+                   "join -s scheduler-addr\n\n";
+            std::cout << "Note: All arguments will be passed to the built-in "
+                         "parallax join script\n";
+            std::cout << "      in the Parallax Python virtual environment.\n";
+        }
 
-std::string ModelJoinCommand::BuildJoinCommand(const CommandContext& context) {
-    std::ostringstream command_stream;
+        std::string ModelJoinCommand::BuildJoinCommand(const CommandContext &context)
+        {
+            std::ostringstream command_stream;
 
-    // Built-in execution of parallax join
-    command_stream << "parallax join";
+            // Built-in execution of prakasa join
+            command_stream << "prakasa join";
 
-    // If there are user parameters, append them
-    for (const auto& arg : context.args) {
-        command_stream << " " << EscapeForShell(arg);
-    }
+            // If there are user parameters, append them
+            for (const auto &arg : context.args)
+            {
+                command_stream << " " << EscapeForShell(arg);
+            }
 
-    return command_stream.str();
-}
+            return command_stream.str();
+        }
 
-// ModelChatCommand implementation
-CommandResult ModelChatCommand::ValidateArgsImpl(CommandContext& context) {
-    // Check if it's a help request
-    if (context.args.size() == 1 &&
-        (context.args[0] == "--help" || context.args[0] == "-h")) {
-        ShowHelpImpl();
-        return CommandResult::Success;
-    }
+        // ModelChatCommand implementation
+        CommandResult ModelChatCommand::ValidateArgsImpl(CommandContext &context)
+        {
+            // Check if it's a help request
+            if (context.args.size() == 1 &&
+                (context.args[0] == "--help" || context.args[0] == "-h"))
+            {
+                ShowHelpImpl();
+                return CommandResult::Success;
+            }
 
-    // chat command can be executed without parameters (using default settings)
-    return CommandResult::Success;
-}
+            // chat command can be executed without parameters (using default settings)
+            return CommandResult::Success;
+        }
 
-CommandResult ModelChatCommand::ExecuteImpl(const CommandContext& context) {
-    // Build chat command: parallax chat [user parameters...]
-    std::string chat_command = BuildChatCommand(context);
+        CommandResult ModelChatCommand::ExecuteImpl(const CommandContext &context)
+        {
+            // Build chat command: parallax chat [user parameters...]
+            std::string chat_command = BuildChatCommand(context);
 
-    // Build complete WSL command with venv activation and CUDA environment
-    std::string full_command = BuildVenvActivationCommand(context);
+            // Build complete WSL command with venv activation and CUDA environment
+            std::string full_command = BuildVenvActivationCommand(context);
 
-    // If proxy is configured, add proxy environment variables
-    if (!context.proxy_url.empty()) {
-        full_command += " && HTTP_PROXY='" + context.proxy_url +
-                        "' HTTPS_PROXY='" + context.proxy_url + "' " +
-                        chat_command;
-    } else {
-        full_command += " && " + chat_command;
-    }
+            // If proxy is configured, add proxy environment variables
+            if (!context.proxy_url.empty())
+            {
+                full_command += " && HTTP_PROXY='" + context.proxy_url +
+                                "' HTTPS_PROXY='" + context.proxy_url + "' " +
+                                chat_command;
+            }
+            else
+            {
+                full_command += " && " + chat_command;
+            }
 
-    std::string wsl_command = BuildWSLCommand(context, full_command);
+            std::string wsl_command = BuildWSLCommand(context, full_command);
 
-    info_log("Executing chat interface command: %s", wsl_command.c_str());
+            info_log("Executing chat interface command: %s", wsl_command.c_str());
 
-    // Use WSLProcess to execute command for real-time output
-    WSLProcess wsl_process;
-    int exit_code = wsl_process.Execute(wsl_command);
+            // Use WSLProcess to execute command for real-time output
+            WSLProcess wsl_process;
+            int exit_code = wsl_process.Execute(wsl_command);
 
-    if (exit_code == 0) {
-        ShowInfo("Chat interface started successfully. Visit http://localhost:3002 in your browser.");
-        return CommandResult::Success;
-    } else {
-        ShowError("Failed to start chat interface with exit code: " +
-                  std::to_string(exit_code));
-        return CommandResult::ExecutionError;
-    }
-}
+            if (exit_code == 0)
+            {
+                ShowInfo("Chat interface started successfully. Visit http://localhost:3002 in your browser.");
+                return CommandResult::Success;
+            }
+            else
+            {
+                ShowError("Failed to start chat interface with exit code: " +
+                          std::to_string(exit_code));
+                return CommandResult::ExecutionError;
+            }
+        }
 
-void ModelChatCommand::ShowHelpImpl() {
-    std::cout << "Usage: parallax chat [args...]\n\n";
-    std::cout << "Access the chat interface from any non-scheduler computer.\n\n";
-    std::cout << "This command will:\n";
-    std::cout << "  1. Change to ~/parallax directory\n";
-    std::cout << "  2. Activate the Python virtual environment\n";
-    std::cout << "  3. Set proxy environment variables (if configured)\n";
-    std::cout << "  4. Execute 'parallax chat' with your arguments\n";
-    std::cout << "  5. Start chat server at http://localhost:3002\n\n";
-    std::cout << "Arguments:\n";
-    std::cout << "  args...       Arguments to pass to parallax chat "
-                 "(optional)\n\n";
-    std::cout << "Options:\n";
-    std::cout << "  --help, -h    Show this help message\n\n";
-    std::cout << "Examples:\n";
-    std::cout
-        << "  parallax chat                           # Execute: parallax "
-           "chat (local area network)\n";
-    std::cout << "  parallax chat -s scheduler-addr         # Execute: parallax "
-                 "chat -s scheduler-addr (public network)\n";
-    std::cout
-        << "  parallax chat -s 12D3KooWLX7MWuzi1Txa5LyZS4eTQ2tPaJijheH8faHggB9SxnBu\n";
-    std::cout << "                                          # Connect to specific scheduler\n";
-    std::cout << "  parallax chat --host 0.0.0.0           # Allow API access from other machines\n\n";
-    std::cout << "Note: All arguments will be passed to the built-in "
-                 "parallax chat script\n";
-    std::cout << "      in the Parallax Python virtual environment.\n";
-    std::cout << "      After launching, visit http://localhost:3002 in your browser.\n";
-}
+        void ModelChatCommand::ShowHelpImpl()
+        {
+            std::cout << "Usage: parallax chat [args...]\n\n";
+            std::cout << "Access the chat interface from any non-scheduler computer.\n\n";
+            std::cout << "This command will:\n";
+            std::cout << "  1. Change to ~/parallax directory\n";
+            std::cout << "  2. Activate the Python virtual environment\n";
+            std::cout << "  3. Set proxy environment variables (if configured)\n";
+            std::cout << "  4. Execute 'parallax chat' with your arguments\n";
+            std::cout << "  5. Start chat server at http://localhost:3002\n\n";
+            std::cout << "Arguments:\n";
+            std::cout << "  args...       Arguments to pass to parallax chat "
+                         "(optional)\n\n";
+            std::cout << "Options:\n";
+            std::cout << "  --help, -h    Show this help message\n\n";
+            std::cout << "Examples:\n";
+            std::cout
+                << "  parallax chat                           # Execute: parallax "
+                   "chat (local area network)\n";
+            std::cout << "  parallax chat -s scheduler-addr         # Execute: parallax "
+                         "chat -s scheduler-addr (public network)\n";
+            std::cout
+                << "  parallax chat -s 12D3KooWLX7MWuzi1Txa5LyZS4eTQ2tPaJijheH8faHggB9SxnBu\n";
+            std::cout << "                                          # Connect to specific scheduler\n";
+            std::cout << "  parallax chat --host 0.0.0.0           # Allow API access from other machines\n\n";
+            std::cout << "Note: All arguments will be passed to the built-in "
+                         "parallax chat script\n";
+            std::cout << "      in the Parallax Python virtual environment.\n";
+            std::cout << "      After launching, visit http://localhost:3002 in your browser.\n";
+        }
 
-std::string ModelChatCommand::BuildChatCommand(const CommandContext& context) {
-    std::ostringstream command_stream;
+        std::string ModelChatCommand::BuildChatCommand(const CommandContext &context)
+        {
+            std::ostringstream command_stream;
 
-    // Built-in execution of parallax chat
-    command_stream << "parallax chat";
+            // Built-in execution of prakasa chat
+            command_stream << "prakasa chat";
 
-    // If there are user parameters, append them
-    for (const auto& arg : context.args) {
-        command_stream << " " << EscapeForShell(arg);
-    }
+            // If there are user parameters, append them
+            for (const auto &arg : context.args)
+            {
+                command_stream << " " << EscapeForShell(arg);
+            }
 
-    return command_stream.str();
-}
+            return command_stream.str();
+        }
 
-}  // namespace commands
-}  // namespace parallax
+    } // namespace commands
+} // namespace parallax
