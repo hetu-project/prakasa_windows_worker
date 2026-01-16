@@ -49,7 +49,7 @@ int CommandParser::Parse(int argc, char* argv[]) {
     Command* command = FindCommand(command_name);
     if (!command) {
         std::cerr << "Unknown command: " << command_name << std::endl;
-        std::cerr << "Run 'parallax --help' for usage information."
+        std::cerr << "Run 'prakasa --help' for usage information."
                   << std::endl;
         return 1;
     }

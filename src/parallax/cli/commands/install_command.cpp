@@ -118,9 +118,9 @@ int InstallCommand::InstallAllComponents() {
                      "successfully!\n";
         std::cout << "Your system is now ready to run Parallax.\n";
         std::cout << "\nNext steps:\n";
-        std::cout << "  1. Run 'parallax check' to verify the installation\n";
+        std::cout << "  1. Run 'prakasa check' to verify the installation\n";
         std::cout << "  2. Test Parallax model server:\n";
-        std::cout << "     parallax run\n";
+        std::cout << "     prakasa run\n";
         return 0;
     } else {
         std::cout << "\n[ERROR] Some components failed to install.\n";

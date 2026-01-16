@@ -19,7 +19,7 @@ CommandResult CheckCommand::ValidateArgsImpl(CommandContext& context) {
             this->ShowError("Unknown parameter: " + arg);
             this->ShowError(
                 "The 'check' command does not accept additional parameters.");
-            this->ShowError("Usage: parallax check [--help|-h]");
+            this->ShowError("Usage: prakasa check [--help|-h]");
             return CommandResult::InvalidArgs;
         }
     }
@@ -42,9 +42,9 @@ CommandResult CheckCommand::ExecuteImpl(const CommandContext& context) {
         std::cout << "\nNext steps:\n";
         std::cout
             << "  1. You can now run Parallax distributed inference tasks:\n";
-        std::cout << "     parallax run\n";
+        std::cout << "     prakasa run\n";
         std::cout
-            << "  2. Use 'parallax --help' to see all available commands\n";
+            << "  2. Use 'prakasa --help' to see all available commands\n";
         return CommandResult::Success;
     } else if (result == 2) {
         // Restart information already displayed in CheckAllComponents(), no
@@ -57,11 +57,11 @@ CommandResult CheckCommand::ExecuteImpl(const CommandContext& context) {
         std::cout << "\nNext steps:\n";
         std::cout
             << "  1. You can run Parallax tasks (environment is ready):\n";
-        std::cout << "     parallax run\n";
+        std::cout << "     prakasa run\n";
         std::cout << "  2. Consider running 'parallax install' to update "
                      "components\n";
         std::cout
-            << "  3. Use 'parallax --help' to see all available commands\n";
+            << "  3. Use 'prakasa --help' to see all available commands\n";
         return CommandResult::Success;  // Warnings don't count as errors, still
                                         // return success
     } else {
@@ -72,7 +72,7 @@ CommandResult CheckCommand::ExecuteImpl(const CommandContext& context) {
 }
 
 void CheckCommand::ShowHelpImpl() {
-    std::cout << "Usage: parallax check [options]\n\n";
+    std::cout << "Usage: prakasa check [options]\n\n";
     std::cout
         << "Check Parallax distributed inference framework environment.\n\n";
     std::cout << "This command verifies all required components:\n";
@@ -91,8 +91,8 @@ void CheckCommand::ShowHelpImpl() {
     std::cout << "  1    Invalid arguments\n";
     std::cout << "  2    Environment issues found or reboot required\n\n";
     std::cout << "Examples:\n";
-    std::cout << "  parallax check             Run environment check\n";
-    std::cout << "  parallax check --help      Show this help message\n";
+    std::cout << "  prakasa check             Run environment check\n";
+    std::cout << "  prakasa check --help      Show this help message\n";
 }
 
 int CheckCommand::CheckAllComponents() {

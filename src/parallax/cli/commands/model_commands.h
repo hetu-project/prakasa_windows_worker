@@ -69,30 +69,30 @@ class ModelRunCommand : public WSLCommand<ModelRunCommand> {
     }
 
     void ShowHelpImpl() {
-        std::cout << "Usage: parallax run [args...]\n\n";
+        std::cout << "Usage: prakasa run [args...]\n\n";
         std::cout
             << "Run Parallax distributed inference server directly in WSL.\n\n";
         std::cout << "This command will:\n";
         std::cout << "  1. Change to ~/parallax directory\n";
         std::cout << "  2. Activate the Python virtual environment\n";
         std::cout << "  3. Set proxy environment variables (if configured)\n";
-        std::cout << "  4. Execute 'parallax run' with your arguments\n\n";
+        std::cout << "  4. Execute 'prakasa run' with your arguments\n\n";
         std::cout << "Arguments:\n";
-        std::cout << "  args...       Arguments to pass to parallax run "
+        std::cout << "  args...       Arguments to pass to prakasa run "
                      "(optional)\n\n";
         std::cout << "Options:\n";
         std::cout << "  --help, -h    Show this help message\n\n";
         std::cout << "Examples:\n";
         std::cout
-            << "  parallax run                             # Execute: parallax "
+            << "  prakasa run                             # Execute: parallax "
                "run\n";
-        std::cout << "  parallax run -m Qwen/Qwen3-0.6B         # Execute: parallax "
+        std::cout << "  prakasa run -m Qwen/Qwen3-0.6B         # Execute: parallax "
                      "run -m Qwen/Qwen3-0.6B\n";
         std::cout
-            << "  parallax run --port 8080                 # Execute: parallax "
+            << "  prakasa run --port 8080                 # Execute: parallax "
                "run --port 8080\n\n";
         std::cout << "Note: All arguments will be passed to the built-in "
-                     "parallax run script\n";
+                     "prakasa run script\n";
         std::cout << "      in the Parallax Python virtual environment.\n";
     }
 
