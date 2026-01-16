@@ -95,7 +95,7 @@ For detailed architecture analysis, see [ARCHITECTURE_ANALYSIS.md](ARCHITECTURE_
 
 Download the latest installer from the Release page:
 
-[Prakasa_Windows_Setup.exe](https://github.com/hetu-project/prakasa_windows_cli/releases/latest/download/Prakasa_Windows_Setup.exe)
+[Prakasa_Windows_Setup.exe](https://github.com/hetu-project/prakasa_windows_worker/releases/latest/download/Prakasa_Win_Setup.exe)
 
 ### 2. Environment Check
 

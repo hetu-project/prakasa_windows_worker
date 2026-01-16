@@ -5,7 +5,7 @@
       <Control bkimage="file='resources\finish\bg.png'" width="188" height="188"/>
       <!-- 环境变量设置选项 -->
       <VerticalLayout padding="72,33">
-        <Label text="Parallax has been" textcolor="#FF000000" font="10" align="left" height="25"/>
+        <Label text="Executor has been" textcolor="#FF000000" font="10" align="left" height="25"/>
         <Label text="installed Successfully!" textcolor="#FF000000" font="10" align="left" height="25"/>
         <HorizontalLayout height="25" padding="0,15">
           <CheckBox name="chkAddToPathFinish" width="12" height="12" selected="true" normalimage="file='resources\CheckBox\check_no.png'" selectedimage="file='resources\CheckBox\check_yes.png'" padding="0,7"/>

@@ -9,7 +9,7 @@
   <VerticalLayout inset="1,1,1,1" bkimage="file='resources\bg\bg.png'" >
     <HorizontalLayout float="true" inset="5,5,5,0" pos="0,0,634,30">
       <Label width="13" height="13" padding="13,12,0,0" bkimage="file='resources\logo\gradient_logo.png'" />
-      <Label name="lblWindowTitle" padding="10,8,0,0" autowidth="true" text="Parallax Installer" textcolor="#FF000000" />
+      <Label name="lblWindowTitle" padding="10,8,0,0" autowidth="true" text="Prakasa Installer" textcolor="#FF000000" />
       <Container />
       <Button name="btnFinishedMin" width="9" height="9" padding="0,13" text="一" textcolor="#FF000000" hottextcolor="#FF00FFFF" pushedtextcolor="#FF00FFFF" font="3"/>
       <Control width="5" />
