@@ -15,6 +15,7 @@ namespace parallax
       extern const std::string KEY_WSL_KERNEL_URL;
       extern const std::string KEY_PRAKASA_GIT_REPO_URL;
       extern const std::string KEY_PRAKASA_GIT_BRANCH;
+      extern const std::string KEY_PIP_INDEX_URL;
 
       // Configuration file manager class
       class ConfigManager

@@ -18,6 +18,7 @@ namespace parallax
         const std::string KEY_WSL_KERNEL_URL = "wsl_kernel_url";
         const std::string KEY_PRAKASA_GIT_REPO_URL = "prakasa_git_repo_url";
         const std::string KEY_PRAKASA_GIT_BRANCH = "prakasa_git_branch";
+        const std::string KEY_PIP_INDEX_URL = "pip_index_url";
 
         // Default configuration file name
         const std::string ConfigManager::DEFAULT_CONFIG_PATH = "parallax_config.txt";
@@ -62,7 +63,7 @@ namespace parallax
             config_values_[KEY_PRAKASA_GIT_REPO_URL] =
                 "https://github.com/hetu-project/prakasa.git";
             config_values_[KEY_PRAKASA_GIT_BRANCH] = "main";
-            // proxy_url has no default value
+            // proxy_url and pip_index_url have no default value (use official PyPI by default)
         }
 
         // Load configuration file
@@ -109,7 +110,8 @@ namespace parallax
                 {KEY_WSL_INSTALLER_URL, config_values_[KEY_WSL_INSTALLER_URL]},
                 {KEY_WSL_KERNEL_URL, config_values_[KEY_WSL_KERNEL_URL]},
                 {KEY_PRAKASA_GIT_REPO_URL, config_values_[KEY_PRAKASA_GIT_REPO_URL]},
-                {KEY_PRAKASA_GIT_BRANCH, config_values_[KEY_PRAKASA_GIT_BRANCH]}};
+                {KEY_PRAKASA_GIT_BRANCH, config_values_[KEY_PRAKASA_GIT_BRANCH]},
+                {KEY_PIP_INDEX_URL, config_values_[KEY_PIP_INDEX_URL]}};
 
             std::string line;
             while (std::getline(file, line))
@@ -325,7 +327,8 @@ namespace parallax
         {
             static const std::set<std::string> valid_keys = {
                 KEY_PROXY_URL, KEY_WSL_LINUX_DISTRO, KEY_WSL_INSTALLER_URL,
-                KEY_WSL_KERNEL_URL, KEY_PRAKASA_GIT_REPO_URL, KEY_PRAKASA_GIT_BRANCH};
+                KEY_WSL_KERNEL_URL, KEY_PRAKASA_GIT_REPO_URL, KEY_PRAKASA_GIT_BRANCH,
+                KEY_PIP_INDEX_URL};
 
             return valid_keys.find(key) != valid_keys.end();
         }

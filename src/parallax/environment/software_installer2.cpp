@@ -175,6 +175,9 @@ namespace parallax
             std::string git_branch =
                 parallax::config::ConfigManager::GetInstance().GetConfigValue(
                     parallax::config::KEY_PRAKASA_GIT_BRANCH);
+            std::string pip_index_url =
+                parallax::config::ConfigManager::GetInstance().GetConfigValue(
+                    parallax::config::KEY_PIP_INDEX_URL);
 
             const std::string &proxy_url = context_->GetProxyUrl();
 
@@ -283,6 +286,14 @@ namespace parallax
                 "cd ~/prakasa && ([ -d ./venv ] || python3 -m venv ./venv) && source "
                 "./venv/bin/activate "
                 "&& pip install -e '.[gpu]'";
+            if (!pip_index_url.empty())
+            {
+                install_base_cmd =
+                    "cd ~/prakasa && ([ -d ./venv ] || python3 -m venv ./venv) && source "
+                    "./venv/bin/activate "
+                    "&& pip install -i " +
+                    pip_index_url + " -e '.[gpu]'";
+            }
             if (!proxy_url.empty())
             {
                 install_base_cmd =
@@ -291,6 +302,15 @@ namespace parallax
                     "./venv/bin/activate && HTTP_PROXY=\"" +
                     proxy_url + "\" HTTPS_PROXY=\"" + proxy_url +
                     "\" pip install -e '.[gpu]'";
+                if (!pip_index_url.empty())
+                {
+                    install_base_cmd =
+                        "cd ~/prakasa && ([ -d ./venv ] || python3 -m venv ./venv) && "
+                        "source "
+                        "./venv/bin/activate && HTTP_PROXY=\"" +
+                        proxy_url + "\" HTTPS_PROXY=\"" + proxy_url +
+                        "\" pip install -i " + pip_index_url + " -e '.[gpu]'";
+                }
             }
             commands.emplace_back("install_prakasa_base", install_base_cmd, 1800,
                                   true);
