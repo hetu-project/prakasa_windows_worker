@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 
     // Build log file path (under exe running path)
     std::string log_path = parallax::utils::JoinPath(
-        parallax::utils::GetAppBinDir(), "parallax.log");
+        parallax::utils::GetAppBinDir(), "prakasa.log");
 
     // Initialize logging system
     tinylog_init(log_path.c_str(), 1024 * 1024 * 10, 5, 0,

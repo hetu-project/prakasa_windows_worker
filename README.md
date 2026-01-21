@@ -113,6 +113,9 @@ prakasa install
 
 ```cmd
 prakasa config proxy_url "http://127.0.0.1:7890"
+
+# pip index mirror (optional, for faster package installation in China)
+prakasa config pip_index_url "https://pypi.tuna.tsinghua.edu.cn/simple/"
 ```
 
 ### 5. Verify Installation
@@ -212,6 +215,7 @@ prakasa cmd [--venv] <command> [args...]
 **Main Configuration Items**:
 
 - `proxy_url`: Network proxy address (supports http, socks5, socks5h) - for Nostr relay access
+- `pip_index_url`: Python package index mirror URL (optional, for faster package installation in China)
 - `wsl_linux_distro`: WSL Linux distribution (default Ubuntu-24.04)
 - `wsl_installer_url`: WSL installer download URL
 - `wsl_kernel_url`: WSL2 kernel update package download URL
@@ -266,6 +270,9 @@ prakasa_git_repo_url=https://github.com/hetu-project/prakasa.git
 
 # Network proxy configuration (optional, for Nostr relay access)
 proxy_url=http://127.0.0.1:7890
+
+# Python package index mirror (optional, for faster package installation in China)
+pip_index_url=https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
 ## Troubleshooting
