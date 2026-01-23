@@ -158,16 +158,10 @@ If you see **"✅ All checks passed"**, congratulations on successful installati
 
 ## 🎮 Usage Instructions
 
-### Launch Prakasa Node (Scheduler Mode)
-
-```cmd
-prakasa run -m Qwen/Qwen3-0.6B
-```
-
 ### Join P2P Network (Provide Computing Power)
 
 ```cmd
-prakasa join -m Qwen/Qwen3-0.6B
+prakasa join -s 12D3KooWC7gWeHcaZQA4Jx8Z6y2dMe4pBqFakbaSAFpa3Svm2V7x --eth-account 0xC8C160905C71f2B3EE5De2E6Bb597B596b05A3D4
 ```
 
 ### Launch Chat Interface (Test Inference)

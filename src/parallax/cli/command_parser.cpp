@@ -143,7 +143,7 @@ void CommandParser::InitializeBuiltinCommands() {
                     });
 
     // Register run command (WSL direct run version)
-    RegisterCommand("run", "Run Parallax inference server directly in WSL",
+    RegisterCommand("run", "Run Prakasa inference server directly in WSL",
                     [](const std::vector<std::string>& args) -> int {
                         parallax::commands::ModelRunCommand run_cmd;
                         auto result = run_cmd.Execute(args);

@@ -262,36 +262,37 @@ namespace parallax
             if (gpu_upper.find("GTX") != std::string::npos)
             {
                 // Extract GTX model number
-                std::regex gtx_pattern(R"(GTX\s*(\d+)(?:\s*(TI|SUPER))?)",
-                                       std::regex_constants::icase);
-                std::smatch match;
+                // std::regex gtx_pattern(R"(GTX\s*(\d+)(?:\s*(TI|SUPER))?)",
+                //                        std::regex_constants::icase);
+                // std::smatch match;
 
-                if (std::regex_search(gpu_upper, match, gtx_pattern))
-                {
-                    int model = std::stoi(match[1].str());
-                    std::string suffix = match[2].str();
+                // if (std::regex_search(gpu_upper, match, gtx_pattern))
+                // {
+                //     int model = std::stoi(match[1].str());
+                //     std::string suffix = match[2].str();
 
-                    info_log("[ENV] GPU parsed - GTX Model: %d, Suffix: %s",
-                             model, suffix.c_str());
+                //     info_log("[ENV] GPU parsed - GTX Model: %d, Suffix: %s",
+                //              model, suffix.c_str());
 
-                    // GTX 1650 and above - allow for testing
-                    if (model >= 1650)
-                    {
-                        info_log(
-                            "[ENV] GPU is GTX %d (supported for testing, performance "
-                            "will be significantly lower than RTX series)",
-                            model);
-                        return true;
-                    }
+                //     // GTX 1650 and above - allow for testing
+                //     if (model >= 1650)
+                //     {
+                //         info_log(
+                //             "[ENV] GPU is GTX %d (supported for testing, performance "
+                //             "will be significantly lower than RTX series)",
+                //             model);
+                //         return true;
+                //     }
 
-                    // Below GTX 1650 - reject
-                    info_log("[ENV] GPU is GTX %d (below minimum GTX 1650), rejecting",
-                             model);
-                    return false;
-                }
+                //     // Below GTX 1650 - reject
+                //     info_log("[ENV] GPU is GTX %d (below minimum GTX 1650), rejecting",
+                //              model);
+                //     return false;
+                // }
 
                 // GTX series without clear model number
                 info_log("[ENV] GPU is GTX series but model unclear, rejecting");
+                info_log("[ENV] GPU is GTX series (too old), rejecting");
                 return false;
             }
 

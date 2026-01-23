@@ -146,30 +146,30 @@ namespace parallax
 
         void ModelJoinCommand::ShowHelpImpl()
         {
-            std::cout << "Usage: parallax join [args...]\n\n";
+            std::cout << "Usage: prakasa join [args...]\n\n";
             std::cout << "Join a distributed inference cluster as a compute node.\n\n";
             std::cout << "This command will:\n";
-            std::cout << "  1. Change to ~/parallax directory\n";
+            std::cout << "  1. Change to ~/prakasa directory\n";
             std::cout << "  2. Activate the Python virtual environment\n";
             std::cout << "  3. Set proxy environment variables (if configured)\n";
-            std::cout << "  4. Execute 'parallax join' with your arguments\n\n";
+            std::cout << "  4. Execute 'prakasa join' with your arguments\n\n";
             std::cout << "Arguments:\n";
-            std::cout << "  args...       Arguments to pass to parallax join "
+            std::cout << "  args...       Arguments to pass to prakasa join "
                          "(optional)\n\n";
             std::cout << "Options:\n";
             std::cout << "  --help, -h    Show this help message\n\n";
             std::cout << "Examples:\n";
             std::cout
-                << "  parallax join                           # Execute: parallax "
+                << "  prakasa join                           # Execute: prakasa "
                    "join\n";
-            std::cout << "  parallax join -m Qwen/Qwen3-0.6B       # Execute: parallax "
+            std::cout << "  prakasa join -m Qwen/Qwen3-0.6B       # Execute: prakasa "
                          "join -m Qwen/Qwen3-0.6B\n";
             std::cout
-                << "  parallax join -s scheduler-addr         # Execute: parallax "
+                << "  prakasa join -s scheduler-addr         # Execute: prakasa "
                    "join -s scheduler-addr\n\n";
             std::cout << "Note: All arguments will be passed to the built-in "
-                         "parallax join script\n";
-            std::cout << "      in the Parallax Python virtual environment.\n";
+                         "prakasa join script\n";
+            std::cout << "      in the Prakasa Python virtual environment.\n";
         }
 
         std::string ModelJoinCommand::BuildJoinCommand(const CommandContext &context)
@@ -246,32 +246,32 @@ namespace parallax
 
         void ModelChatCommand::ShowHelpImpl()
         {
-            std::cout << "Usage: parallax chat [args...]\n\n";
+            std::cout << "Usage: prakasa chat [args...]\n\n";
             std::cout << "Access the chat interface from any non-scheduler computer.\n\n";
             std::cout << "This command will:\n";
-            std::cout << "  1. Change to ~/parallax directory\n";
+            std::cout << "  1. Change to ~/prakasa directory\n";
             std::cout << "  2. Activate the Python virtual environment\n";
             std::cout << "  3. Set proxy environment variables (if configured)\n";
-            std::cout << "  4. Execute 'parallax chat' with your arguments\n";
+            std::cout << "  4. Execute 'prakasa chat' with your arguments\n";
             std::cout << "  5. Start chat server at http://localhost:3002\n\n";
             std::cout << "Arguments:\n";
-            std::cout << "  args...       Arguments to pass to parallax chat "
+            std::cout << "  args...       Arguments to pass to prakasa chat "
                          "(optional)\n\n";
             std::cout << "Options:\n";
             std::cout << "  --help, -h    Show this help message\n\n";
             std::cout << "Examples:\n";
             std::cout
-                << "  parallax chat                           # Execute: parallax "
+                << "  prakasa chat                           # Execute: prakasa "
                    "chat (local area network)\n";
-            std::cout << "  parallax chat -s scheduler-addr         # Execute: parallax "
+            std::cout << "  prakasa chat -s scheduler-addr         # Execute: prakasa "
                          "chat -s scheduler-addr (public network)\n";
             std::cout
-                << "  parallax chat -s 12D3KooWLX7MWuzi1Txa5LyZS4eTQ2tPaJijheH8faHggB9SxnBu\n";
+                << "  prakasa chat -s 12D3KooWLX7MWuzi1Txa5LyZS4eTQ2tPaJijheH8faHggB9SxnBu\n";
             std::cout << "                                          # Connect to specific scheduler\n";
-            std::cout << "  parallax chat --host 0.0.0.0           # Allow API access from other machines\n\n";
+            std::cout << "  prakasa chat --host 0.0.0.0           # Allow API access from other machines\n\n";
             std::cout << "Note: All arguments will be passed to the built-in "
-                         "parallax chat script\n";
-            std::cout << "      in the Parallax Python virtual environment.\n";
+                         "prakasa chat script\n";
+            std::cout << "      in the Prakasa Python virtual environment.\n";
             std::cout << "      After launching, visit http://localhost:3002 in your browser.\n";
         }
 
